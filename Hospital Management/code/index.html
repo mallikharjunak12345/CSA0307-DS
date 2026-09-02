@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Smart Library Management System Using Trees, Hashing, and Priority Queues with role-based access control for Admins, Faculty, and Students.">
+    <title>Smart Library System</title>
+    <!-- Modern Academic Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Stylesheets with Cache Busting -->
+    <link rel="stylesheet" href="css/main.css?v=3.9">
+    <link rel="stylesheet" href="css/components.css?v=3.9">
+    <link rel="stylesheet" href="css/visualizations.css?v=3.9">
+</head>
+<body>
+
+    <!-- ==========================================================================
+         1. MODERN ACADEMIC ACCOUNT SELECTION & ROLE-SPECIFIC LOGIN SCREENS
+         ========================================================================== -->
+    <div class="login-overlay" id="view-login" style="display: flex;">
+        
+        <!-- CINEMATIC ROLE REVEAL OVERLAY (Netflix-inspired academic reveal) -->
+        <div class="cinematic-reveal-overlay" id="cinematic-reveal-overlay" style="display: none;">
+            <div class="cinematic-backdrop"></div>
+            <div class="cinematic-ambient-radial"></div>
+            <div class="cinematic-particles-layer" id="cinematic-particles-layer"></div>
+            
+            <div class="cinematic-stage">
+                <!-- Central Dynamic Crest / Monogram -->
+                <div class="cinematic-symbol-box" id="cinematic-symbol-box">
+                    <div class="cinematic-svg-wrap" id="cinematic-svg-wrap"></div>
+                    <!-- Shimmer Light Sweep Flare -->
+                    <div class="cinematic-light-sweep" id="cinematic-light-sweep"></div>
+                    <div class="cinematic-symbol-glow"></div>
+                </div>
+
+                <!-- Role Name and System Branding Typography -->
+                <div class="cinematic-text-wrap" id="cinematic-text-wrap">
+                    <h1 class="cinematic-role-title" id="cinematic-role-title">STUDENT</h1>
+                    <div class="cinematic-brand-sub">SMART LIBRARY SYSTEM</div>
+                    <div class="cinematic-accent-line"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CINEMATIC PORTAL ENTRY OVERLAY (Post-Login Portal Transformation) -->
+        <div class="cinematic-portal-overlay" id="cinematic-portal-entry-overlay" style="display: none;">
+            <div class="portal-backdrop"></div>
+            <div class="portal-ambient-glow"></div>
+            <div class="portal-particles-container" id="portal-particles-container"></div>
+            
+            <div class="portal-stage">
+                <!-- Central Morphing Emblem -->
+                <div class="portal-emblem-wrap" id="portal-emblem-wrap">
+                    <div class="portal-svg-host" id="portal-svg-host"></div>
+                    <div class="portal-light-sweep" id="portal-light-sweep"></div>
+                    <div class="portal-emblem-aura"></div>
+                </div>
+
+                <!-- Personalized Time Greeting, User Name, and Role Portal Title -->
+                <div class="portal-text-block" id="portal-text-block">
+                    <span class="portal-greeting-badge" id="portal-greeting-badge">Good Morning</span>
+                    <h1 class="portal-user-name" id="portal-user-name">Rahul Kumar</h1>
+                    <div class="portal-role-tag" id="portal-role-tag">STUDENT PORTAL</div>
+                    <div class="portal-status-line">
+                        <span class="portal-spinner"></span>
+                        <span class="portal-status-text" id="portal-status-text">Entering Secure Library Portal...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A. ACCOUNT SELECTION SCREEN (3 Role Cards) -->
+        <div class="account-selection-container" id="account-selection-screen">
+            <div class="selection-header">
+                <div class="academic-crest-icon">🏛️</div>
+                <span class="selection-institution">University Central Library</span>
+                <h1 class="selection-title">SMART LIBRARY SYSTEM</h1>
+                <p class="selection-subtitle">Choose your account portal to sign in</p>
+                <div class="gold-accent-divider"></div>
+            </div>
+
+            <!-- Role Cards Grid -->
+            <div class="role-cards-grid" id="role-cards-grid">
+                <!-- 1. Student Card -->
+                <div class="role-card role-card-student" id="role-card-student" data-role="student" role="button" tabindex="0" aria-label="Student Portal Login">
+                    <div class="role-card-accent-bar student-accent"></div>
+                    <div class="role-card-icon-wrap">
+                        <span class="role-card-icon">🎓</span>
+                    </div>
+                    <div class="role-card-body">
+                        <span class="role-card-badge">Student Portal</span>
+                        <h2 class="role-card-title">STUDENT</h2>
+                        <p class="role-card-desc">Access course textbooks, track active book loans, submit requests &amp; manage queue reservations.</p>
+                    </div>
+                    <div class="role-card-footer">
+                        <span class="role-card-cta">LOGIN <span class="cta-arrow">→</span></span>
+                    </div>
+                </div>
+
+                <!-- 2. Faculty Card -->
+                <div class="role-card role-card-faculty" id="role-card-faculty" data-role="faculty" role="button" tabindex="0" aria-label="Faculty Portal Login">
+                    <div class="role-card-accent-bar faculty-accent"></div>
+                    <div class="role-card-icon-wrap">
+                        <span class="role-card-icon">👨‍🏫</span>
+                    </div>
+                    <div class="role-card-body">
+                        <span class="role-card-badge">Faculty Portal</span>
+                        <h2 class="role-card-title">FACULTY</h2>
+                        <p class="role-card-desc">Borrow extended research materials, manage priority reservations &amp; course reserve literature.</p>
+                    </div>
+                    <div class="role-card-footer">
+                        <span class="role-card-cta">LOGIN <span class="cta-arrow">→</span></span>
+                    </div>
+                </div>
+
+                <!-- 3. Admin Card -->
+                <div class="role-card role-card-admin" id="role-card-admin" data-role="admin" role="button" tabindex="0" aria-label="Administrator Portal Login">
+                    <div class="role-card-accent-bar admin-accent"></div>
+                    <div class="role-card-icon-wrap">
+                        <span class="role-card-icon">🔐</span>
+                    </div>
+                    <div class="role-card-body">
+                        <span class="role-card-badge">Administration</span>
+                        <h2 class="role-card-title">ADMIN</h2>
+                        <p class="role-card-desc">Catalog inventory control, request approvals, circulation issue &amp; return, and system reports.</p>
+                    </div>
+                    <div class="role-card-footer">
+                        <span class="role-card-cta">LOGIN <span class="cta-arrow">→</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selection Footer Links & Demo Ribbon -->
+            <div class="selection-footer-panel">
+                <div class="selection-register-prompt">
+                    New to the Smart Library System? <a href="#" id="link-selection-register">Register an Account</a>
+                </div>
+                <div class="selection-demo-ribbon">
+                    <span class="demo-ribbon-title">⚡ 1-Click Quick Demo Login:</span>
+                    <div class="demo-ribbon-buttons">
+                        <button type="button" class="demo-quick-btn" id="demo-quick-student">
+                            <span>🎒 Student</span>
+                        </button>
+                        <button type="button" class="demo-quick-btn" id="demo-quick-faculty">
+                            <span>🎓 Faculty</span>
+                        </button>
+                        <button type="button" class="demo-quick-btn" id="demo-quick-admin">
+                            <span>👑 Admin</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- B. ROLE-SPECIFIC LOGIN SCREEN -->
+        <div class="role-login-container" id="role-login-screen" style="display: none;">
+            <div class="login-split-card">
+                <!-- Left Academic Visual Showcase -->
+                <div class="login-showcase-pane">
+                    <div class="showcase-bg-layer" style="background-image: url('assets/library_bg.jpg');"></div>
+                    <div class="showcase-overlay-layer"></div>
+                    <div class="showcase-content">
+                        <div class="showcase-header">
+                            <div class="academic-crest-icon">🏛️</div>
+                            <span class="showcase-institution" id="showcase-role-institution">University Central Library</span>
+                        </div>
+                        <div class="showcase-main">
+                            <h1 class="showcase-title" id="showcase-role-title">SMART LIBRARY SYSTEM</h1>
+                            <p class="showcase-quote" id="showcase-role-quote">Where Knowledge Meets Technology</p>
+                            <div class="gold-accent-divider"></div>
+                            <p class="showcase-desc" id="showcase-role-desc">High-performance digital repository and circulation management powered by Trees, Hashing, and Priority Min-Heaps.</p>
+                        </div>
+                        <div class="showcase-footer">
+                            <div class="showcase-stat-pill" id="showcase-role-pill">
+                                <span class="pill-dot">●</span> Official Academic Portal
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Login Form Panel -->
+                <div class="login-form-pane">
+                    <div class="login-top-bar">
+                        <button type="button" class="btn-back-selection" id="btn-back-to-selection">
+                            <span class="back-arrow">←</span> Back to Account Selection
+                        </button>
+                    </div>
+
+                    <div class="login-card-header anim-stagger anim-stagger-1">
+                        <div class="secure-access-badge" id="login-portal-badge">
+                            <span class="badge-lock-icon" id="login-role-icon">🎓</span>
+                            <span id="login-role-badge-text">Student Portal Access</span>
+                        </div>
+                        <h2 class="academic-login-title" id="login-portal-title">Student Sign In</h2>
+                        <p class="academic-login-subtitle" id="login-portal-subtitle">Enter your credentials to access your student account</p>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="form-login" style="display: flex; flex-direction: column; gap: 14px;">
+                        <div class="login-error-msg" id="login-error-text">
+                            Invalid username or password
+                        </div>
+
+                        <div class="form-group anim-stagger anim-stagger-2" style="margin-bottom: 0;">
+                            <label class="form-label" id="label-login-username">Student ID / Email</label>
+                            <input type="text" class="form-control" id="login-username" placeholder="Enter Student ID or email" required autocomplete="username">
+                        </div>
+
+                        <div class="form-group anim-stagger anim-stagger-3" style="margin-bottom: 0;">
+                            <label class="form-label">Password</label>
+                            <div class="password-input-group">
+                                <input type="password" class="form-control" id="login-password" placeholder="Enter password" required autocomplete="current-password">
+                                <button type="button" class="password-toggle-btn" id="btn-toggle-password" title="Show/Hide Password" aria-label="Toggle password visibility">
+                                    <span id="password-eye-icon">👁️</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="anim-stagger anim-stagger-4" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; color: var(--text-sub);">
+                            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                <input type="checkbox" id="login-remember" checked>
+                                <span>Remember Login</span>
+                            </label>
+                            <a href="#" id="link-forgot-password" class="forgot-password-link">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-navy-gold anim-stagger anim-stagger-5" id="btn-submit-login" style="padding: 12px; font-size: 0.95rem; width: 100%;">
+                            <span id="login-btn-text">Sign In to Student Portal</span>
+                        </button>
+
+                        <!-- Register Option Link -->
+                        <div class="auth-switch-link anim-stagger anim-stagger-6">
+                            Don't have an account? <a href="#" id="link-open-register">Register</a>
+                        </div>
+                    </form>
+
+                    <!-- 1-Click Demo Fill for Selected Role -->
+                    <div class="role-demo-hint-box" id="role-demo-hint-box">
+                        <button type="button" class="btn-fill-role-demo" id="btn-fill-role-demo">
+                            <span>⚡ Fill Demo Credentials: <strong id="role-demo-btn-text">student / student123</strong></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         2. FORGOT PASSWORD WORKFLOW (Student / Faculty / Admin Multi-Step)
+         ========================================================================== -->
+    <div class="login-overlay" id="view-forgot-password" style="display: none;">
+        <div class="login-split-card reset-split-card">
+            <!-- Left Academic Info Showcase -->
+            <div class="login-showcase-pane reset-showcase-pane">
+                <div class="showcase-bg-layer" style="background-image: url('assets/library_bg.jpg');"></div>
+                <div class="showcase-overlay-layer"></div>
+                <div class="showcase-content">
+                    <div class="showcase-header">
+                        <div class="academic-crest-icon">🏛️</div>
+                        <span class="showcase-institution" id="reset-showcase-inst">Academic Security Services</span>
+                    </div>
+                    <div class="showcase-main">
+                        <h1 class="showcase-title" id="reset-showcase-title">Account Recovery</h1>
+                        <p class="showcase-quote" id="reset-showcase-quote">Secure Credential Restoration</p>
+                        <div class="gold-accent-divider"></div>
+                        <p class="showcase-desc">Two-factor identity verification protects institutional research materials, circulation loans, and personal student and faculty records.</p>
+                    </div>
+                    <div class="showcase-footer">
+                        <div class="showcase-stat-pill">
+                            <span class="pill-dot">●</span> 256-Bit Encrypted Recovery
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Password Reset Multi-Step Container -->
+            <div class="login-form-pane reset-form-pane">
+                <!-- Top Return Bar -->
+                <div class="login-top-bar">
+                    <button type="button" class="btn-back-selection" id="btn-back-from-reset">
+                        <span class="back-arrow">←</span> <span id="reset-back-label">Back to Login</span>
+                    </button>
+                </div>
+
+                <!-- Header Badge & Title -->
+                <div class="login-card-header">
+                    <div class="secure-access-badge" id="reset-badge-wrap">
+                        <span class="badge-lock-icon" id="reset-role-icon">🎓</span>
+                        <span id="reset-role-badge">STUDENT PASSWORD RESET</span>
+                    </div>
+                    <h2 class="academic-login-title" id="reset-step-title">Reset Your Password</h2>
+                    <p class="academic-login-subtitle" id="reset-step-subtitle">Follow the secure steps to restore access to your account</p>
+                </div>
+
+                <!-- Error Display -->
+                <div class="login-error-msg" id="reset-error-msg" style="display: none;"></div>
+
+                <!-- ================= STEP 1: FIND ACCOUNT ================= -->
+                <div class="reset-step-panel" id="reset-panel-step1">
+                    <form id="form-reset-step1" style="display: flex; flex-direction: column; gap: 16px;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" id="label-reset-id">Enter your Student ID *</label>
+                            <input type="text" class="form-control" id="reset-input-id" placeholder="e.g. STU001" required autocomplete="username">
+                        </div>
+                        <button type="submit" class="btn btn-navy-gold" id="btn-reset-find" style="padding: 12px; font-size: 0.95rem; width: 100%;">
+                            <span>Continue <span class="cta-arrow">→</span></span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- ================= STEP 2: ACCOUNT FOUND & SEND CODE ================= -->
+                <div class="reset-step-panel" id="reset-panel-step2" style="display: none;">
+                    <div class="account-found-card">
+                        <div class="found-badge">
+                            <span class="found-check">✓</span> ACCOUNT FOUND
+                        </div>
+                        <div class="found-details-grid">
+                            <div class="found-detail-row">
+                                <span class="found-label" id="found-id-label">Student ID:</span>
+                                <strong class="found-val" id="found-id-val">STU001</strong>
+                            </div>
+                            <div class="found-detail-row">
+                                <span class="found-label">Account Name:</span>
+                                <strong class="found-val" id="found-name-val">Rahul Sharma</strong>
+                            </div>
+                            <div class="found-detail-row">
+                                <span class="found-label">Registered Email:</span>
+                                <strong class="found-val text-gold" id="found-email-val">r•••••@student.smartlib.edu</strong>
+                            </div>
+                        </div>
+
+                        <!-- Demo Mode Notice -->
+                        <div class="reset-demo-notice">
+                            <div class="demo-notice-header">
+                                <span>⚡ Demo Mode</span>
+                            </div>
+                            <p class="demo-notice-text">Email verification is simulated because this application runs directly in the browser.</p>
+                        </div>
+                    </div>
+
+                    <p class="reset-instruction-text" style="font-size: 0.85rem; color: var(--text-sub); margin: 6px 0 12px 0;">We can send a verification code to your registered email.</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button type="button" class="btn btn-navy-gold" id="btn-reset-send-code" style="padding: 12px; font-size: 0.95rem; width: 100%;">
+                            <span>Send Verification Code</span>
+                        </button>
+                        <button type="button" class="btn btn-outline" id="btn-reset-change-id" style="padding: 10px; font-size: 0.88rem; width: 100%;">
+                            <span>← Search Different ID</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ================= STEP 3: ENTER VERIFICATION CODE ================= -->
+                <div class="reset-step-panel" id="reset-panel-step3" style="display: none;">
+                    <form id="form-reset-step3" style="display: flex; flex-direction: column; gap: 16px;">
+                        <div class="code-sent-info" style="font-size: 0.85rem; color: var(--text-main); line-height: 1.5;">
+                            <span>A 6-digit code has been generated for <strong id="verify-email-display" class="text-gold">r•••••@student.smartlib.edu</strong></span>
+                            <!-- Simulated Code Quick Access for Demo Testing -->
+                            <div class="demo-code-chip" id="demo-code-chip-wrap" style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding: 8px 14px; background: rgba(201, 162, 39, 0.12); border: 1px dashed var(--gold-accent); border-radius: var(--radius-md); font-size: 0.84rem;">
+                                <span>Simulated Code: <strong id="demo-code-val" style="font-family: var(--font-mono); letter-spacing: 0.1em; color: var(--gold-accent);">------</strong></span>
+                                <button type="button" class="btn-fill-simulated-code" id="btn-autofill-code" style="background: none; border: none; color: var(--gold-accent); cursor: pointer; font-weight: 700; text-decoration: underline;">Auto-Fill</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Enter 6-Digit Verification Code *</label>
+                            <input type="text" class="form-control text-center" id="reset-input-code" placeholder="• • • • • •" maxlength="6" pattern="[0-9]{6}" required autocomplete="one-time-code" style="letter-spacing: 0.35em; font-size: 1.3rem; font-weight: 700; font-family: var(--font-mono);">
+                        </div>
+
+                        <button type="submit" class="btn btn-navy-gold" id="btn-reset-verify-code" style="padding: 12px; font-size: 0.95rem; width: 100%;">
+                            <span>Verify Code</span>
+                        </button>
+
+                        <div class="resend-countdown-wrap" style="text-align: center; font-size: 0.84rem; color: var(--text-sub);">
+                            <span id="resend-countdown-text">Didn't receive it? <button type="button" id="btn-resend-code" disabled style="background: none; border: none; color: var(--text-muted); cursor: not-allowed; font-weight: 600;">Resend code in 45s</button></span>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ================= STEP 4: CREATE NEW PASSWORD ================= -->
+                <div class="reset-step-panel" id="reset-panel-step4" style="display: none;">
+                    <form id="form-reset-step4" style="display: flex; flex-direction: column; gap: 14px;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">New Password (Min. 6 chars) *</label>
+                            <div class="password-input-group">
+                                <input type="password" class="form-control" id="reset-new-password" placeholder="Create new password" required minlength="6" autocomplete="new-password">
+                                <button type="button" class="password-toggle-btn" id="btn-toggle-reset-p1" title="Toggle Password" aria-label="Toggle Password Visibility">
+                                    <span id="eye-reset-p1">👁️</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Password Strength Meter -->
+                        <div class="password-strength-box" style="margin: -4px 0 4px 0;">
+                            <div class="strength-bar-bg" style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: var(--radius-full); overflow: hidden;">
+                                <div class="strength-bar-fill" id="reset-strength-bar" style="width: 0%; height: 100%; transition: width 250ms ease, background-color 250ms ease;"></div>
+                            </div>
+                            <div class="strength-label-wrap" style="display: flex; justify-content: space-between; font-size: 0.78rem; margin-top: 4px; color: var(--text-sub);">
+                                <span>Password Strength:</span>
+                                <strong id="reset-strength-label" style="color: var(--text-sub);">None</strong>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Confirm New Password *</label>
+                            <div class="password-input-group">
+                                <input type="password" class="form-control" id="reset-confirm-password" placeholder="Re-enter new password" required minlength="6" autocomplete="new-password">
+                                <button type="button" class="password-toggle-btn" id="btn-toggle-reset-p2" title="Toggle Password" aria-label="Toggle Password Visibility">
+                                    <span id="eye-reset-p2">👁️</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-navy-gold" id="btn-submit-new-password" style="padding: 12px; font-size: 0.95rem; width: 100%; margin-top: 4px;">
+                            <span>Reset Password</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- ================= STEP 5: SUCCESS CELEBRATION ================= -->
+                <div class="reset-step-panel" id="reset-panel-step5" style="display: none; text-align: center; padding: 12px 0;">
+                    <div class="reset-success-symbol" style="width: 64px; height: 64px; border-radius: 50%; background: rgba(56, 161, 105, 0.15); border: 2px solid #38A169; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto; color: #38A169; font-size: 2rem;">
+                        <span>✓</span>
+                    </div>
+                    <h3 class="reset-success-title" style="font-family: var(--font-heading); font-size: 1.3rem; margin: 0 0 8px 0; color: var(--text-main);">PASSWORD RESET SUCCESSFUL</h3>
+                    <p class="reset-success-desc" style="font-size: 0.88rem; color: var(--text-sub); line-height: 1.5; margin: 0;">Your password has been updated successfully.<br>You can now sign in with your new password.</p>
+                    
+                    <button type="button" class="btn btn-navy-gold" id="btn-reset-success-login" style="padding: 12px 24px; font-size: 0.95rem; width: 100%; margin-top: 20px;">
+                        <span id="btn-reset-login-label">Back to Student Login</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         2. PROFESSIONAL REGISTRATION SCREEN (Modal / View)
+         ========================================================================== -->
+    <div class="login-overlay" id="view-register" style="display: none;">
+        <div class="login-split-card register-split-card">
+            <!-- Left Academic Info -->
+            <div class="login-showcase-pane register-showcase-pane">
+                <div class="showcase-bg-layer" style="background-image: url('assets/library_bg.jpg');"></div>
+                <div class="showcase-overlay-layer"></div>
+                <div class="showcase-content">
+                    <div class="showcase-header">
+                        <div class="academic-crest-icon">🏛️</div>
+                        <span class="showcase-institution">Academic Enrollment</span>
+                    </div>
+                    <div class="showcase-main">
+                        <h1 class="showcase-title">Join the Digital Library</h1>
+                        <p class="showcase-quote">Access Curated Knowledge</p>
+                        <div class="gold-accent-divider"></div>
+                        <p class="showcase-desc">Self-register for automated student or faculty privileges, instant catalog searches, queue reservations, and real-time loan tracking.</p>
+                    </div>
+                    <div class="showcase-footer">
+                        <div class="showcase-stat-pill">
+                            <span class="pill-dot">●</span> Official University Registry
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Registration Form -->
+            <div class="login-form-pane register-form-pane">
+                <div class="login-card-header">
+                    <h2 class="academic-login-title">Create Library Account</h2>
+                    <p class="academic-login-subtitle">Choose your account type to register</p>
+                </div>
+
+                <!-- Role Selector: Student, Faculty, Admin -->
+                <div class="form-group" style="margin-bottom: 8px;">
+                    <label class="form-label" style="text-align: center; margin-bottom: 6px;">I am registering as:</label>
+                    <div class="register-role-selector" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
+                        <button type="button" class="role-pill-btn active" id="reg-role-student" data-role="student">🎒 Student</button>
+                        <button type="button" class="role-pill-btn" id="reg-role-faculty" data-role="faculty">🎓 Faculty</button>
+                        <button type="button" class="role-pill-btn" id="reg-role-admin" data-role="admin">👑 Admin</button>
+                    </div>
+                </div>
+
+                <!-- Registration Form -->
+                <form id="form-register" style="display: flex; flex-direction: column; gap: 10px;">
+                    <div class="register-error-msg" id="register-error-text">
+                        Validation Error
+                    </div>
+
+                    <div class="form-row-grid">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Full Name *</label>
+                            <input type="text" class="form-control" id="reg-name" placeholder="e.g. Arun Kumar" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" id="reg-id-label">Student ID *</label>
+                            <input type="text" class="form-control" id="reg-id" placeholder="e.g. STU002" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row-grid">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" class="form-control" id="reg-email" placeholder="e.g. arun@smartlib.edu" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="tel" class="form-control" id="reg-phone" placeholder="e.g. 9876543210" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row-grid" id="reg-academic-fields">
+                        <div class="form-group" id="reg-dept-group" style="margin-bottom: 0;">
+                            <label class="form-label">Department *</label>
+                            <input type="text" class="form-control" id="reg-department" placeholder="e.g. Computer Science">
+                        </div>
+                        <div class="form-group" id="reg-year-group" style="margin-bottom: 0;">
+                            <label class="form-label">Academic Year *</label>
+                            <select class="form-select" id="reg-year">
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3" selected>3rd Year</option>
+                                <option value="4">4th Year</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row-grid">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Password (Min. 6 chars) *</label>
+                            <input type="password" class="form-control" id="reg-password" placeholder="Create password" required minlength="6">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Confirm Password *</label>
+                            <input type="password" class="form-control" id="reg-confirm-password" placeholder="Re-enter password" required minlength="6">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-navy-gold" id="btn-submit-register" style="padding: 12px; font-size: 0.95rem; width: 100%; margin-top: 4px;">
+                        <span id="reg-btn-text">Create Student Account</span>
+                    </button>
+
+                    <div class="auth-switch-link">
+                        Already have an account? <a href="#" id="link-open-login">Sign In</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         3. MAIN APPLICATION (Protected Dashboard)
+         ========================================================================== -->
+    <div class="app-container" id="main-app-layout" style="display: none;">
+        <!-- Backdrop overlay for mobile drawer -->
+        <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="app-sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand-group">
+                    <div class="sidebar-logo-icon">📚</div>
+                    <div>
+                        <h1 class="sidebar-title">SMART LIBRARY SYSTEM</h1>
+                        <span class="sidebar-subtitle">Smart Library System</span>
+                    </div>
+                </div>
+                <button class="sidebar-close-btn" id="sidebar-close" aria-label="Close menu">&times;</button>
+            </div>
+
+            <!-- Dynamic Role-Based Navigation -->
+            <nav class="sidebar-nav" id="dynamic-sidebar-nav">
+                <!-- Injected dynamically by app.js based on role (Admin, Faculty, Student) -->
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="ds-badge">
+                    <span>BST &bull; Hash &bull; Heap</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" id="mobile-toggle" aria-label="Toggle Navigation">&#9776;</button>
+                    <h2 class="page-heading-title" id="page-title">Library Dashboard</h2>
+                </div>
+
+                <div class="header-right">
+                    <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Dark/Light Mode">
+                        <span id="theme-icon">☀️</span>
+                        <span id="theme-label">Light</span>
+                    </button>
+
+                    <!-- Logged-in User Profile & Logout -->
+                    <div class="header-user-wrap">
+                        <div class="user-avatar-badge" id="header-user-avatar">A</div>
+                        <div class="user-info-text">
+                            <span class="user-name-display" id="header-user-name">Administrator</span>
+                            <span class="user-role-badge-display" id="header-user-role">Admin</span>
+                        </div>
+                        <button class="logout-btn" id="header-logout-btn" title="Sign out of library">
+                            <span>🚪 Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Body -->
+            <main class="content-body">
+
+                <!-- 1. ADMIN DASHBOARD VIEW -->
+                <section class="app-view active-view" id="view-dashboard">
+                    <!-- Academic Hero Banner -->
+                    <div class="academic-hero-banner">
+                        <div class="hero-content">
+                            <span class="hero-badge">🏛️ University Central Library</span>
+                            <h2 class="hero-title">Knowledge at Your Fingertips</h2>
+                            <p class="hero-desc">Explore, search, request and manage institutional library collections powered by smart Data Structures.</p>
+                            <div class="hero-actions">
+                                <button class="btn btn-gold" id="btn-hero-search-books"><span class="btn-icon-symbol">📖</span> Search Book Catalog</button>
+                                <button class="btn btn-outline-light" id="btn-hero-view-requests"><span class="btn-icon-symbol">📋</span> Circulation Desk</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Grid -->
+                    <div class="stats-grid" id="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span class="stat-label">Total Books</span>
+                                <span class="stat-value" id="stat-total-books">0</span>
+                                <span class="stat-subtext" id="stat-unique-titles">0 unique titles</span>
+                            </div>
+                            <div class="stat-icon icon-books">📚</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span class="stat-label">Available Copies</span>
+                                <span class="stat-value text-success" id="stat-available-books">0</span>
+                                <span class="stat-subtext">Ready to issue</span>
+                            </div>
+                            <div class="stat-icon icon-available">✓</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span class="stat-label">Borrowed Copies</span>
+                                <span class="stat-value text-warning" id="stat-borrowed-books">0</span>
+                                <span class="stat-subtext">Currently on loan</span>
+                            </div>
+                            <div class="stat-icon icon-borrowed">📖</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span class="stat-label">Pending Requests</span>
+                                <span class="stat-value text-warning" id="stat-pending-requests">0</span>
+                                <span class="stat-subtext">Awaiting admin review</span>
+                            </div>
+                            <div class="stat-icon icon-requests">📩</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span class="stat-label">Active Reservations</span>
+                                <span class="stat-value text-primary" id="stat-active-reservations">0</span>
+                                <span class="stat-subtext">In Priority Min-Heap</span>
+                            </div>
+                            <div class="stat-icon icon-reservations">⏳</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span class="stat-label">Overdue Loans</span>
+                                <span class="stat-value text-danger" id="stat-overdue-books">0</span>
+                                <span class="stat-subtext">Fines accruing</span>
+                            </div>
+                            <div class="stat-icon icon-overdue">⚠</div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions Bar -->
+                    <div class="quick-actions-card">
+                        <div class="quick-actions-title">⚡ Quick Library Actions</div>
+                        <div class="quick-actions-grid" id="quick-actions-container">
+                            <!-- Injected based on role -->
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Content Split -->
+                    <div class="dashboard-grid">
+                        <!-- Left: Recent Transactions -->
+                        <div class="dashboard-card">
+                            <div class="card-header-flex">
+                                <h3 class="card-title">📜 Recent Transactions</h3>
+                                <button class="btn btn-outline btn-sm" id="dash-view-all-tx">View All</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="data-table" id="dash-tx-table">
+                                    <thead>
+                                        <tr>
+                                            <th>TX ID</th>
+                                            <th>Book Title</th>
+                                            <th>Member</th>
+                                            <th>Action</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dash-tx-tbody">
+                                        <!-- Dynamic JS Rows -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Right: Popular Books & Priority Queue Snapshot -->
+                        <div style="display: flex; flex-direction: column; gap: 24px;">
+                            <div class="dashboard-card">
+                                <div class="card-header-flex">
+                                    <h3 class="card-title">🔥 Most Borrowed Books</h3>
+                                </div>
+                                <div id="dash-popular-books-chart"></div>
+                            </div>
+
+                            <div class="dashboard-card">
+                                <div class="card-header-flex">
+                                    <h3 class="card-title">🎯 Priority Queue Snapshot</h3>
+                                    <button class="btn btn-outline btn-sm" id="dash-view-all-res">View Waitlist</button>
+                                </div>
+                                <div id="dash-priority-snapshot">
+                                    <!-- Dynamic Queue Snapshot -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. STREAMLINED FACULTY DASHBOARD VIEW -->
+                <section class="app-view" id="view-faculty-dashboard">
+                    <div class="role-welcome-card">
+                        <div class="role-welcome-text">
+                            <h2 id="faculty-welcome-title">Welcome, Dr. Faculty</h2>
+                            <p>Faculty Member &bull; Priority Level 1 Library Privileges</p>
+                        </div>
+                        <span class="badge badge-faculty" style="font-size: 0.85rem; padding: 6px 14px;">🎓 Faculty Account</span>
+                    </div>
+
+                    <!-- Faculty 4 Stats Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span class="stat-label">Books Currently Borrowed</span>
+                                <span class="stat-value" id="faculty-stat-borrowed">0</span>
+                                <span class="stat-subtext">Active loans</span>
+                            </div>
+                            <div class="stat-icon icon-books">📖</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span class="stat-label">Active Reservations</span>
+                                <span class="stat-value text-primary" id="faculty-stat-reservations">0</span>
+                                <span class="stat-subtext">Priority #1 waitlist</span>
+                            </div>
+                            <div class="stat-icon icon-reservations">⏳</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span class="stat-label">Pending Requests</span>
+                                <span class="stat-value text-warning" id="faculty-stat-pending">0</span>
+                                <span class="stat-subtext">Awaiting admin review</span>
+                            </div>
+                            <div class="stat-icon icon-requests">📩</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span class="stat-label">Current Fine</span>
+                                <span class="stat-value text-success" id="faculty-stat-fine">₹0</span>
+                                <span class="stat-subtext">Outstanding balance</span>
+                            </div>
+                            <div class="stat-icon icon-available">💰</div>
+                        </div>
+                    </div>
+
+                    <!-- Faculty Quick Actions -->
+                    <div class="quick-actions-card">
+                        <div class="quick-actions-title">⚡ Faculty Quick Actions</div>
+                        <div class="quick-actions-grid">
+                            <button class="quick-action-btn" id="fqa-search-books">
+                                <span class="quick-action-icon">🔍</span>
+                                <span class="quick-action-label">Search Books</span>
+                            </button>
+                            <button class="quick-action-btn" id="fqa-my-requests">
+                                <span class="quick-action-icon">📩</span>
+                                <span class="quick-action-label">My Requests</span>
+                            </button>
+                            <button class="quick-action-btn" id="fqa-my-loans">
+                                <span class="quick-action-icon">📖</span>
+                                <span class="quick-action-label">My Borrowed Books</span>
+                            </button>
+                            <button class="quick-action-btn" id="fqa-reserve-book">
+                                <span class="quick-action-icon">⏳</span>
+                                <span class="quick-action-label">My Reservations</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Faculty Dashboard Tables -->
+                    <div class="dashboard-grid">
+                        <!-- My Borrowed Books -->
+                        <div class="dashboard-card">
+                            <div class="card-header-flex">
+                                <h3 class="card-title">📖 My Borrowed Books</h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Book Title</th>
+                                            <th>Author</th>
+                                            <th>Issue Date</th>
+                                            <th>Due Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="faculty-dash-loans-tbody">
+                                        <!-- Injected -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- My Reservations -->
+                        <div class="dashboard-card">
+                            <div class="card-header-flex">
+                                <h3 class="card-title">⏳ My Reservations</h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Book</th>
+                                            <th>Reserved On</th>
+                                            <th>Queue Pos</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="faculty-dash-reservations-tbody">
+                                        <!-- Injected -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. BOOK CATALOG / SEARCH VIEW -->
+                <section class="app-view" id="view-books">
+                    <div class="filter-bar">
+                        <div class="search-input-wrap">
+                            <span class="search-icon-prefix">🔍</span>
+                            <input type="text" id="books-search-input" placeholder="Search by Title, Author, ISBN, Category, or Book ID...">
+                        </div>
+                        <div class="filter-actions">
+                            <select class="form-select" id="books-category-filter">
+                                <option value="all">All Categories</option>
+                            </select>
+                            <select class="form-select" id="books-availability-filter">
+                                <option value="all">All Availability</option>
+                                <option value="available">Available in Stock</option>
+                                <option value="out_of_stock">Out of Stock (Reservations Open)</option>
+                            </select>
+                            <select class="form-select" id="books-sort-filter">
+                                <option value="id_asc">Sort by Book ID (Asc)</option>
+                                <option value="id_desc">Sort by Book ID (Desc)</option>
+                                <option value="title_asc">Title (A - Z)</option>
+                                <option value="popular">Most Popular</option>
+                                <option value="year_desc">Latest Year</option>
+                            </select>
+                            <button class="btn btn-primary admin-only-btn" id="btn-open-add-book">➕ Add New Book</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table" id="books-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>ISBN</th>
+                                    <th>Category</th>
+                                    <th>Shelf</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="books-tbody">
+                                <!-- Dynamic JS Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 4. ADMIN BOOK REQUESTS MANAGEMENT VIEW (Admin Only) -->
+                <section class="app-view" id="view-admin-requests">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" id="tab-req-all" data-role-filter="all">All Requests</button>
+                        <button class="tab-btn" id="tab-req-student" data-role-filter="student">Student Requests</button>
+                        <button class="tab-btn" id="tab-req-faculty" data-role-filter="faculty">Faculty Requests</button>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <h3 class="card-title">📩 Member Book Borrowing Requests</h3>
+                            <span class="badge badge-warning" id="admin-pending-req-badge">0 Pending</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table" id="admin-requests-table">
+                                <thead>
+                                    <tr>
+                                        <th>Request ID</th>
+                                        <th>User Name</th>
+                                        <th>User ID</th>
+                                        <th>Role</th>
+                                        <th>Book Requested</th>
+                                        <th>Request Date</th>
+                                        <th>Status</th>
+                                        <th>Admin Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-requests-tbody">
+                                    <!-- Dynamic Requests Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. USER MY REQUESTS VIEW (Student & Faculty) -->
+                <section class="app-view" id="view-my-requests">
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <h3 class="card-title">📩 My Book Requests</h3>
+                            <span class="badge badge-info">Admin Approval Required</span>
+                        </div>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
+                            Track the status of your book borrowing requests. Once approved by the administrator, the book will be added to your active borrowed books list.
+                        </p>
+                        <div class="table-responsive">
+                            <table class="data-table" id="my-requests-table">
+                                <thead>
+                                    <tr>
+                                        <th>Request ID</th>
+                                        <th>Book Title</th>
+                                        <th>Requested On</th>
+                                        <th>Status</th>
+                                        <th>Decision / Due Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="my-requests-tbody">
+                                    <!-- User requests -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. MEMBER MANAGEMENT VIEW (Admin Only) -->
+                <section class="app-view" id="view-members">
+                    <div class="filter-bar">
+                        <div class="search-input-wrap">
+                            <span class="search-icon-prefix">🔍</span>
+                            <input type="text" id="members-search-input" placeholder="Search by Student/Faculty ID, Name, Email, Department...">
+                        </div>
+                        <div class="filter-actions">
+                            <select class="form-select" id="members-type-filter">
+                                <option value="all">All Member Types</option>
+                                <option value="Student">Students</option>
+                                <option value="Faculty">Faculty</option>
+                            </select>
+                            <select class="form-select" id="members-status-filter">
+                                <option value="all">All Statuses</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                            <button class="btn btn-primary" id="btn-open-register-member">➕ Add Member</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table" id="members-table">
+                            <thead>
+                                <tr>
+                                    <th>Member ID</th>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Email</th>
+                                    <th>Department</th>
+                                    <th>Year</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="members-tbody">
+                                <!-- Dynamic JS Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 7. ISSUE / RETURN CIRCULATION DESK (Admin Only) -->
+                <section class="app-view" id="view-issue-return">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" id="tab-issue-book">📤 Direct Issue Book</button>
+                        <button class="tab-btn" id="tab-return-book">📥 Return Book</button>
+                    </div>
+
+                    <!-- Issue Book Tab -->
+                    <div class="tab-pane active" id="pane-issue-book">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-card">
+                                <h3 class="card-title" style="margin-bottom: 20px;">📤 Admin Direct Book Issue</h3>
+                                <form id="form-issue-book">
+                                    <div class="form-group" id="issue-member-select-group">
+                                        <label class="form-label">1. Select Member</label>
+                                        <select class="form-select" id="issue-member-select" required>
+                                            <option value="">-- Choose Member --</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">2. Select Book to Issue</label>
+                                        <select class="form-select" id="issue-book-select" required>
+                                            <option value="">-- Choose Book --</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 12px;" id="btn-submit-issue">
+                                        Confirm &amp; Issue Book
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="dashboard-card">
+                                <h3 class="card-title">ℹ️ Circulation Rules</h3>
+                                <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.88rem; color: var(--text-muted); margin-top: 10px;">
+                                    <p>• <strong>Borrowing Limit:</strong> Up to 4 active books per member.</p>
+                                    <p>• <strong>Standard Period:</strong> 14 days allowed borrowing period.</p>
+                                    <p>• <strong>Overdue Fine:</strong> ₹5 per day per overdue book.</p>
+                                    <p>• <strong>Priority Reservation:</strong> If copies are 0, members are enqueued in the Priority Queue waitlist automatically.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Return Book Tab -->
+                    <div class="tab-pane" id="pane-return-book" style="display: none;">
+                        <div class="dashboard-card">
+                            <h3 class="card-title" style="margin-bottom: 20px;">📥 Active Book Loans (Ready for Return)</h3>
+                            <div class="table-responsive">
+                                <table class="data-table" id="return-loans-table">
+                                    <thead>
+                                        <tr>
+                                            <th>TX ID</th>
+                                            <th>Book Title</th>
+                                            <th>Member</th>
+                                            <th>Issue Date</th>
+                                            <th>Due Date</th>
+                                            <th>Overdue Status</th>
+                                            <th>Fine</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="return-loans-tbody">
+                                        <!-- Active loans -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 8. RESERVATIONS (PRIORITY QUEUE) VIEW -->
+                <section class="app-view" id="view-reservations">
+                    <div class="filter-bar">
+                        <div class="search-input-wrap">
+                            <span class="search-icon-prefix">🔍</span>
+                            <input type="text" id="reservations-search-input" placeholder="Search reservations by member or book...">
+                        </div>
+                        <div class="filter-actions">
+                            <button class="btn btn-primary" id="btn-open-add-reservation">➕ Add Priority Reservation</button>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <h3 class="card-title" id="reservations-table-title">🎯 Priority Queue Waitlist</h3>
+                            <div class="ds-badge">Faculty (P1) &gt; Scholar (P2) &gt; Student (P3)</div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table" id="reservations-table">
+                                <thead>
+                                    <tr>
+                                        <th>Queue Rank</th>
+                                        <th>Reservation ID</th>
+                                        <th>Member</th>
+                                        <th>Role &amp; Priority</th>
+                                        <th>Book Reserved</th>
+                                        <th>Requested At</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reservations-tbody">
+                                    <!-- Reservations list -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 9. TRANSACTIONS LOG VIEW -->
+                <section class="app-view" id="view-transactions">
+                    <div class="filter-bar">
+                        <div class="search-input-wrap">
+                            <span class="search-icon-prefix">🔍</span>
+                            <input type="text" id="tx-search-input" placeholder="Search transactions by TX ID, Book, or Member...">
+                        </div>
+                        <div class="filter-actions">
+                            <select class="form-select" id="tx-action-filter">
+                                <option value="all">All Actions</option>
+                                <option value="Issued">Issued</option>
+                                <option value="Returned">Returned</option>
+                            </select>
+                            <select class="form-select" id="tx-status-filter">
+                                <option value="all">All Statuses</option>
+                                <option value="Active">Active Loans</option>
+                                <option value="Overdue">Overdue</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table" id="transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>TX ID</th>
+                                    <th>Book Title</th>
+                                    <th>Member Name</th>
+                                    <th>Action</th>
+                                    <th>Issue Date</th>
+                                    <th>Due Date</th>
+                                    <th>Return Date</th>
+                                    <th>Fine Accrued</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactions-tbody">
+                                <!-- Dynamic transactions -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 10. ANALYTICS VIEW (Admin Only) -->
+                <section class="app-view" id="view-analytics">
+                    <div class="analytics-grid">
+                        <div class="chart-card">
+                            <h3 class="chart-card-title">📊 Books Distribution by Category</h3>
+                            <div id="analytics-category-chart"></div>
+                        </div>
+
+                        <div class="chart-card">
+                            <h3 class="chart-card-title">🔥 Most Borrowed Titles (All-Time)</h3>
+                            <div id="analytics-popular-chart"></div>
+                        </div>
+
+                        <div class="chart-card" style="grid-column: span 2;">
+                            <h3 class="chart-card-title">📈 Monthly Borrowing Volume (Last 6 Months)</h3>
+                            <div id="analytics-monthly-chart"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 11. USER PROFILE VIEW (All Roles) -->
+                <section class="app-view" id="view-profile">
+                    <div class="profile-card">
+                        <div class="profile-header-banner">
+                            <div class="profile-avatar-large" id="profile-avatar-icon">👤</div>
+                            <div>
+                                <h2 style="font-size: 1.4rem; font-weight: 800;" id="profile-full-name">User Name</h2>
+                                <div style="display: flex; gap: 8px; align-items: center; margin-top: 6px;">
+                                    <span class="badge badge-admin" id="profile-role-badge">Role</span>
+                                    <span style="font-size: 0.85rem; color: var(--text-muted);" id="profile-user-id">ID: USR001</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Editable Profile Form for Faculty/Student -->
+                        <form id="form-edit-profile" style="display: flex; flex-direction: column; gap: 14px;">
+                            <div class="form-row-grid">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="profile-input-email" required>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="profile-input-phone" required>
+                                </div>
+                            </div>
+                            <div class="form-row-grid">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label">Department</label>
+                                    <input type="text" class="form-control" id="profile-input-dept">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label">Registration Date</label>
+                                    <input type="text" class="form-control" id="profile-joined-text" disabled>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm" style="align-self: flex-start;">💾 Update Profile Info</button>
+                        </form>
+
+                        <!-- Personal Loans & Reservations (For Faculty & Students) -->
+                        <div id="profile-personal-data-section">
+                            <h3 class="card-title" style="margin-bottom: 14px;">📖 Currently Borrowed Books</h3>
+                            <div id="profile-borrowed-list"></div>
+
+                            <h3 class="card-title" style="margin-top: 24px; margin-bottom: 14px;">⏳ Active Reservations in Priority Heap</h3>
+                            <div id="profile-reservations-list"></div>
+
+                            <div style="margin-top: 24px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; display: flex; align-items: center; justify-content: space-between;">
+                                <div>
+                                    <div style="font-size: 0.85rem; color: var(--text-muted);">Outstanding Fine Balance</div>
+                                    <div style="font-size: 1.4rem; font-weight: 800;" id="profile-fine-amount">₹0</div>
+                                </div>
+                                <button class="btn btn-success" id="profile-pay-fine-btn" style="display: none;">💰 Pay Fine Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 12. ADMIN MANAGEMENT VIEW (Admin Only) -->
+                <section class="app-view" id="view-admin-mgmt">
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <h3 class="card-title">👑 Administrator Directory &amp; Access Management</h3>
+                            <div class="ds-badge">System Administrators</div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table" id="admin-users-table">
+                                <thead>
+                                    <tr>
+                                        <th>Admin ID</th>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-users-tbody">
+                                    <!-- Injected by app.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 13. STUDENT SPECIALIZED VIEWS -->
+                <!-- Student My Borrowed Books -->
+                <section class="app-view" id="view-student-books">
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <h3 class="card-title">📖 My Active Book Loans</h3>
+                            <span class="badge badge-info">14-Day Allowed Period</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Book Title</th>
+                                        <th>Book ID</th>
+                                        <th>Issue Date</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="student-loans-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Student My Reservations -->
+                <section class="app-view" id="view-student-reservations">
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <h3 class="card-title">⏳ My Priority Queue Waitlist</h3>
+                            <div class="ds-badge">Priority Level 3</div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Queue Rank</th>
+                                        <th>Book Title</th>
+                                        <th>Book ID</th>
+                                        <th>Request Time</th>
+                                        <th>Priority Level</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="student-reservations-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Student My Fines -->
+                <section class="app-view" id="view-student-fines">
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <h3 class="card-title">💰 My Fines &amp; Settlement Ledger</h3>
+                        </div>
+                        <div id="student-fines-container"></div>
+                    </div>
+                </section>
+
+                <!-- 14. SETTINGS VIEW (Admin Only) -->
+                <section class="app-view" id="view-settings">
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <h3 class="card-title" style="margin-bottom: 20px;">⚙️ Library Circulation Settings</h3>
+                            <form id="form-settings">
+                                <div class="form-group">
+                                    <label class="form-label">Library System Name</label>
+                                    <input type="text" class="form-control" id="setting-lib-name" required>
+                                </div>
+                                <div class="form-row-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">Overdue Fine (₹ / day)</label>
+                                        <input type="number" class="form-control" id="setting-fine-rate" min="0" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Max Borrow Duration (Days)</label>
+                                        <input type="number" class="form-control" id="setting-max-days" min="1" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Max Active Loans per Member</label>
+                                    <input type="number" class="form-control" id="setting-max-books" min="1" max="10" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save System Settings</button>
+                            </form>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <h3 class="card-title" style="margin-bottom: 20px;">💾 LocalStorage &amp; Data Management</h3>
+                            <div style="display: flex; flex-direction: column; gap: 16px;">
+                                <p style="font-size: 0.88rem; color: var(--text-muted);">
+                                    All books, members, transactions, and settings are persisted in the browser's LocalStorage.
+                                </p>
+                                <button class="btn btn-secondary" id="btn-reload-sample-data">
+                                    🔄 Reload Rich Sample Data (20+ Books, 10+ Members)
+                                </button>
+                                <button class="btn btn-danger" id="btn-reset-all-data">
+                                    ⚠️ Reset All Data to Factory Default
+                                </button>
+                            </div>
+                        </div>
+                <!-- 15. AUDIT LOG VIEW (Admin Only) -->
+                <section class="app-view" id="view-audit-log">
+                    <div class="filter-bar">
+                        <div class="search-input-wrap">
+                            <span class="search-icon-prefix">🔍</span>
+                            <input type="text" id="audit-log-search-input" placeholder="Search audit logs by action, admin, or target...">
+                        </div>
+                        <div class="filter-actions">
+                            <select class="form-select" id="audit-log-action-filter">
+                                <option value="all">All Actions</option>
+                                <option value="Approved Request">Approved Request</option>
+                                <option value="Rejected Request">Rejected Request</option>
+                                <option value="Issued Book">Issued Book</option>
+                                <option value="Returned Book">Returned Book</option>
+                                <option value="Added Member">Added Member</option>
+                                <option value="Added Book">Added Book</option>
+                                <option value="Updated Book">Updated Book</option>
+                                <option value="Deleted Book">Deleted Book</option>
+                            </select>
+                            <button class="btn btn-outline" id="btn-refresh-audit-logs">🔄 Refresh</button>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <h3 class="card-title">📋 Institutional Audit Log</h3>
+                            <div class="ds-badge">Immutable Admin Activity History</div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table" id="audit-logs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date &amp; Time</th>
+                                        <th>Admin ID</th>
+                                        <th>Admin Name</th>
+                                        <th>Action</th>
+                                        <th>Target Record</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="audit-logs-tbody">
+                                    <!-- Injected dynamically by app.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Application Script (ES Module) -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
